@@ -1,35 +1,63 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from "react";
+import {
+  Button,
+  Heading,
+  View,
+  Card,
+  Divider,
+} from "@aws-amplify/ui-react";
+import { useAuthenticator } from "@aws-amplify/ui-react";
+import { Amplify } from "aws-amplify";
+import "@aws-amplify/ui-react/styles.css";
+import outputs from "../amplify_outputs.json";
+import { generateClient } from "aws-amplify/data";
 
-function App() {
-  const [count, setCount] = useState(0)
+Amplify.configure(outputs);
+
+/**
+ * @type {import('aws-amplify/data').Client}
+ */
+const client = generateClient({
+  authMode: "userPool",
+});
+
+export default function App() {
+  const [userProfiles, setUserProfiles] = useState([]);
+  const { user, signOut } = useAuthenticator((context) => [context.user]);
+
+  useEffect(() => {
+    async function fetchProfiles() {
+      try {
+        const result = await client.models.UserProfile.list();
+        setUserProfiles(result.data);
+      } catch (error) {
+        console.error("Error fetching user profiles:", error);
+      }
+    }
+
+    fetchProfiles();
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          {"Ijji 4 Korean BBQ"} <span role="img" aria-label="thumbs up">👍</span> {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <View className="app-container">
+      <Card className="bunny-card">
+        <Heading level={2}>🐰 Welcome, {user?.username || "Guest"}!</Heading>
+        <Divider />
+        <p>Enjoy your cute bunny-themed Amplify app 💕</p>
+        <Button onClick={signOut}>Sign out</Button>
 
-export default App
+        <Divider />
+        <h3>🐇 User Profiles:</h3>
+        {userProfiles.length > 0 ? (
+          <ul>
+            {userProfiles.map((profile, i) => (
+              <li key={i}>{profile.name}</li>
+            ))}
+          </ul>
+        ) : (
+          <p>No profiles found yet!</p>
+        )}
+      </Card>
+    </View>
+  );
+}
