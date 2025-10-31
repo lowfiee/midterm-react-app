@@ -1,9 +1,10 @@
-:root {
-  font-family: system-ui, sans-serif;
-  background-color: #ffd4e2;
-  color: #333;
-  text-align: center;
-  min-height: 100vh;
+body {
+  background-color: #FFD4E2;
+  background-image: url("https://i.pinimg.com/1200x/01/e3/dd/01e3dd23763ea1d88fdee718c898c575.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  font-family: "Poppins", sans-serif;
 }
 
 .app-container {
@@ -27,4 +28,82 @@ button {
   border-radius: 10px;
   font-weight: bold;
   cursor: pointer;
+}
+
+button:hover {
+  background-color: #ffd4e2;
+  box-shadow: 0 0 10px #f7becd;
+  transition: 0.3s ease;
+}
+
+.amplify-authenticator {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 20px;
+  box-shadow: 0px 4px 20px rgba(255, 182, 193, 0.4);
+  padding: 2rem;
+  backdrop-filter: blur(8px);
+  margin: auto;
+}
+
+.amplify-button {
+  background-color: #f7becd !important;
+  border: none !important;
+  border-radius: 10px !important;
+  color: white !important;
+  font-weight: bold !important;
+}
+
+.amplify-button:hover {
+  background-color: #f2dce3 !important;
+}
+
+.amplify-tabs__item {
+  color: #444;
+  font-weight: 600;
+}
+
+.amplify-tabs__item--active {
+  color: #f7becd !important;
+  border-color: #f7becd !important;
+}
+
+.amplify-input:focus {
+  border-color: #f7becd !important;
+  box-shadow: 0 0 0 1px #f7becd !important;
+}
+
+.amplify-input:focus {
+  border-color: #f7becd !important;
+  box-shadow: 0 0 0 1px #f1c4d0 !important;
+}
+
+[data-amplify-authenticator] {
+  animation: fadeIn 1.3s ease-in-out !important;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+button:hover {
+  background-color: #ffd4e2;
+  box-shadow: 0 0 10px #f7becd;
+  transition: all 0.3s ease-in-out;
+}
+
+input {
+  border-radius: 10px;
+  border: 1.5px solid #f7becd;
+}
+
+.amplify-tabs__item--active::after {
+  content: " 💖";
+  font-size: 0.9rem;
 }

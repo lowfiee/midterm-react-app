@@ -9,7 +9,7 @@ import {
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import { Amplify } from "aws-amplify";
 import "@aws-amplify/ui-react/styles.css";
-import outputs from "../amplify_outputs.json";
+import outputs from "./aws-exports";
 import { generateClient } from "aws-amplify/data";
 
 Amplify.configure(outputs);
